@@ -96,4 +96,18 @@ class HomeController < ApplicationController
       format.html { render :text => followers['users'].count }
     end
   end
+  
+  def deleteall
+    Follower.all.each do |follower|
+      follower.destroy
+    end 
+    
+    Following.all.each do |following|
+      following.destroy
+    end 
+    
+    Account.all.each do |account|
+      account.destroy
+    end
+  end
 end
