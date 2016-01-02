@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @following.username %>
+</p>
+
+<p>
+  <strong>Twitter:</strong>
+  <%= @following.twitter_id %>
+</p>
+
+<p>
+  <strong>Display name:</strong>
+  <%= @following.display_name %>
+</p>
+
+<p>
+  <strong>References:</strong>
+  <%= @following.references %>
+</p>
+
+<%= link_to 'Edit', edit_following_path(@following) %> |
+<%= link_to 'Back', followings_path %>
