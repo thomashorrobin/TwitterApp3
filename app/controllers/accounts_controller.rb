@@ -10,6 +10,8 @@ class AccountsController < ApplicationController
   # GET /accounts/1
   # GET /accounts/1.json
   def show
+    @followers = Follower.where(account_id: @account.id)
+    @followings = Following.where(account_id: @account.id)
   end
 
   # GET /accounts/new
@@ -54,6 +56,14 @@ class AccountsController < ApplicationController
   # DELETE /accounts/1
   # DELETE /accounts/1.json
   def destroy
+    followers = Follower.where(account_id: @account.id)
+    followings = Following.where(account_id: @account.id)
+    followers.each do |follower|
+      follower.destroy
+    end
+    followings.each do |following|
+      following.destroy
+    end
     @account.destroy
     respond_to do |format|
       format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }

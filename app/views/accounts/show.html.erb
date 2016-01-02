@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<h2>Datails</h2>
+
 <p>
   <strong>Username:</strong>
   <%= @account.username %>
@@ -15,5 +17,48 @@
   <%= @account.display_name %>
 </p>
 
-<%= link_to 'Edit', edit_account_path(@account) %> |
-<%= link_to 'Back', accounts_path %>
+<hr>
+
+<h2>Followers</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Twitter</th>
+      <th>Display name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @followers.each do |follower| %>
+      <tr>
+        <td><%= follower.username %></td>
+        <td><%= follower.twitter_id %></td>
+        <td><%= follower.display_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Following</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Twitter</th>
+      <th>Display name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @followings.each do |following| %>
+      <tr>
+        <td><%= following.username %></td>
+        <td><%= following.twitter_id %></td>
+        <td><%= following.display_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
