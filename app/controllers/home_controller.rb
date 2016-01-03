@@ -93,10 +93,12 @@ class HomeController < ApplicationController
 
       @follower.save
     end
+    
+    redirect_to "/home/index"
 
-    respond_to do |format|
-      format.html { render :text => followers['users'].count }
-    end
+    # respond_to do |format|
+    #   format.html { render :text => followers['users'].count }
+    # end
   end
   
   def deleteall
@@ -111,5 +113,7 @@ class HomeController < ApplicationController
     Account.all.each do |account|
       account.destroy
     end
+    
+    redirect_to "/home/index"
   end
 end
