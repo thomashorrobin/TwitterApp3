@@ -41,6 +41,8 @@ class HomeController < ApplicationController
     @twitter_account.username = i['screen_name']
     @twitter_account.display_name = i['name']
     @twitter_account.twitter_id = i['id_str']
+    @twitter_account.followers = i['followers_count']
+    @twitter_account.following = i['friends_count']
 
     @twitter_account.save
 
