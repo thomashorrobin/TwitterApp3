@@ -41,8 +41,8 @@ class HomeController < ApplicationController
     @twitter_account.username = i['screen_name']
     @twitter_account.display_name = i['name']
     @twitter_account.twitter_id = i['id_str']
-    @twitter_account.followers = i['followers_count']
-    @twitter_account.following = i['friends_count']
+    @twitter_account.followers = 0 # i['followers_count']
+    @twitter_account.following = 0 # i['friends_count']
 
     @twitter_account.save
 
@@ -93,27 +93,27 @@ class HomeController < ApplicationController
 
       @follower.save
     end
-    
+
     redirect_to "/home/index"
 
     # respond_to do |format|
     #   format.html { render :text => followers['users'].count }
     # end
   end
-  
+
   def deleteall
     Follower.all.each do |follower|
       follower.destroy
-    end 
-    
+    end
+
     Following.all.each do |following|
       following.destroy
-    end 
-    
+    end
+
     Account.all.each do |account|
       account.destroy
     end
-    
+
     redirect_to "/home/index"
   end
 end
