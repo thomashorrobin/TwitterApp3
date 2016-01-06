@@ -65,10 +65,12 @@ class AccountsController < ApplicationController
       following.destroy
     end
     @account.destroy
-    respond_to do |format|
-      format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+
+    redirect_to "/home/index"
+    # respond_to do |format|
+    #   format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
+    #   format.json { head :no_content }
+    # end
   end
 
   private
