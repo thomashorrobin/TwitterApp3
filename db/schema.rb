@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 20151226234757) do
     t.string   "display_name", limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "followers",    limit: 4,   null: false
+    t.integer  "following",    limit: 4,   null: false
+  end
+
+  create_table "all_nodes", id: false, force: :cascade do |t|
+    t.string "username",     limit: 255
+    t.string "display_name", limit: 255
   end
 
   create_table "followers", force: :cascade do |t|
@@ -27,7 +34,10 @@ ActiveRecord::Schema.define(version: 20151226234757) do
     t.string   "display_name", limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "account_id",   limit: 4,   null: false
   end
+
+  add_index "followers", ["account_id"], name: "fk_followers_accounts", using: :btree
 
   create_table "followings", force: :cascade do |t|
     t.string   "username",     limit: 255
@@ -35,6 +45,11 @@ ActiveRecord::Schema.define(version: 20151226234757) do
     t.string   "display_name", limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "account_id",   limit: 4,   null: false
   end
 
+  add_index "followings", ["account_id"], name: "fk_followings_accounts", using: :btree
+
+  add_foreign_key "followers", "accounts", name: "followers_ibfk_1"
+  add_foreign_key "followings", "accounts", name: "followings_ibfk_1"
 end
