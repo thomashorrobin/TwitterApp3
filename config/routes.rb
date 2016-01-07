@@ -5,8 +5,13 @@ Rails.application.routes.draw do
   get 'home/index'
 
   post 'home/addaccount'
-  
+
   delete 'home/deleteall'
+
+  post 'home/resetall'
+
+  get 'home/export_nodes'
+  get 'home/export_edges'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

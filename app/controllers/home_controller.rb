@@ -116,4 +116,30 @@ class HomeController < ApplicationController
 
     redirect_to "/home/index"
   end
+
+  def resetall
+    respond_to do |format|
+      format.html { render :text => "reset all" }
+    end
+  end
+
+  def export_edges
+    @content = "Hello World\n"
+    @content << "new line\n"
+    @content << "new line\n"
+    @content << "new line\n"
+    send_data @content,
+      :type => 'text',
+      :disposition => "attachment; filename=your_file_name.txt"
+  end
+
+  def export_nodes
+    respond_to do |format|
+      format.html { render :text => "export nodes" }
+    end
+  end
+
+  private
+
+    
 end

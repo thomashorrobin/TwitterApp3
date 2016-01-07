@@ -38,3 +38,9 @@
 </table>
 <br>
 <%= link_to 'Clear all accounts', '/home/deleteall', method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Reset all accounts', '/home/resetall', method: :post, data: { confirm: 'Are you sure?' } %>
+<hr>
+<h2>Export Data</h2>
+<%= link_to 'Download Nodes', '/home/export_nodes', method: :get %>
+<br>
+<%= link_to 'Download Edges', '/home/export_edges', method: :get %>
