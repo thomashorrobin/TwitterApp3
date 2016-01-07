@@ -34,9 +34,21 @@ class HomeController < ApplicationController
   end
 
   def resetall
-    respond_to do |format|
-      format.html { render :text => "reset all" }
+    Follower.all.each do |follower|
+      follower.destroy
     end
+
+    Following.all.each do |following|
+      following.destroy
+    end
+
+    Account.all.each do |account|
+      refreash_user_account account.twitter_id
+      add_following account.twitter_id
+      add_followers account.twitter_id
+    end
+
+    redirect_to "/home/index"
   end
 
   def export_edges
