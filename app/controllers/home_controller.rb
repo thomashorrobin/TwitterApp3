@@ -67,12 +67,6 @@ class HomeController < ApplicationController
       :disposition => "attachment; filename=edges.csv"
   end
 
-  def export_nodes
-    respond_to do |format|
-      format.html { render :text => "export nodes" }
-    end
-  end
-
   private
 
     def add_user_account (username)
