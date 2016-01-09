@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(version: 20151226234757) do
     t.string   "display_name", limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.integer  "followers",    limit: 4,   null: false
-    t.integer  "following",    limit: 4,   null: false
+    t.integer  "followers_count",    limit: 4,   null: false
+    t.integer  "following_count",    limit: 4,   null: false
   end
 
   create_table "all_nodes", id: false, force: :cascade do |t|

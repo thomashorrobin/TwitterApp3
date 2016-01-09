@@ -52,13 +52,19 @@ class HomeController < ApplicationController
   end
 
   def export_edges
-    @content = "Hello World\n"
-    @content << "new line\n"
-    @content << "new line\n"
-    @content << "new line\n"
+    @content = '"Follower","Following"' + "\n"
+
+    Follower.all.each do |follower|
+      @content << '"' + follower.username + '","' + follower.account.username + '"' + "\n"
+    end
+
+    Following.all.each do |following|
+      @content << '"' + following.account.username + '","' + following.username + '"' + "\n"
+    end
+
     send_data @content,
       :type => 'text',
-      :disposition => "attachment; filename=your_file_name.txt"
+      :disposition => "attachment; filename=edges.csv"
   end
 
   def export_nodes
@@ -107,8 +113,8 @@ class HomeController < ApplicationController
       @twitter_account.username = i['screen_name']
       @twitter_account.display_name = i['name']
       @twitter_account.twitter_id = i['id_str']
-      @twitter_account.followers = i['followers_count']
-      @twitter_account.following = i['friends_count']
+      @twitter_account.followers_count = i['followers_count']
+      @twitter_account.following_count = i['friends_count']
 
       @twitter_account.save
 
@@ -154,8 +160,8 @@ class HomeController < ApplicationController
 
       @twitter_account.username = i['screen_name']
       @twitter_account.display_name = i['name']
-      @twitter_account.followers = i['followers_count']
-      @twitter_account.following = i['friends_count']
+      @twitter_account.followers_count = i['followers_count']
+      @twitter_account.following_count = i['friends_count']
 
       @twitter_account.save
 
@@ -195,6 +201,22 @@ class HomeController < ApplicationController
 
       i = JSON.parse(response.body)
 
+      account_id = get_account_id twitter_id
+
+      i['users'].each do |user|
+
+        @following = Follower.new
+
+        @following.username = user['screen_name']
+        @following.display_name = user['name']
+        @following.twitter_id = user['id_str']
+
+        @following.account_id = account_id
+
+        @following.save
+
+      end
+
       http.finish
     end
 
@@ -231,7 +253,28 @@ class HomeController < ApplicationController
 
       i = JSON.parse(response.body)
 
+      account_id = get_account_id twitter_id
+
+      i['users'].each do |user|
+
+        @following = Following.new
+
+        @following.username = user['screen_name']
+        @following.display_name = user['name']
+        @following.twitter_id = user['id_str']
+
+        @following.account_id = account_id
+
+        @following.save
+
+      end
+
       http.finish
+    end
+
+    def get_account_id (twitter_id)
+      @account = Account.find_by twitter_id: twitter_id
+      return @account.id
     end
 
 end

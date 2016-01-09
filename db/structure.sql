@@ -29,8 +29,8 @@ CREATE TABLE `accounts` (
   `display_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `followers` int(11) NOT NULL,
-  `following` int(11) NOT NULL,
+  `followers_count` int(11) NOT NULL,
+  `following_count` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -43,7 +43,7 @@ DROP TABLE IF EXISTS `all_nodes`;
 /*!50001 DROP VIEW IF EXISTS `all_nodes`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `all_nodes` AS SELECT 
+/*!50001 CREATE VIEW `all_nodes` AS SELECT
  1 AS `username`,
  1 AS `display_name`*/;
 SET character_set_client = @saved_cs_client;
@@ -136,4 +136,3 @@ INSERT INTO schema_migrations (version) VALUES ('20151226225811');
 INSERT INTO schema_migrations (version) VALUES ('20151226234715');
 
 INSERT INTO schema_migrations (version) VALUES ('20151226234757');
-
