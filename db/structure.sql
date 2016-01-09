@@ -32,21 +32,21 @@ CREATE TABLE `accounts` (
   `followers_count` int(11) NOT NULL,
   `following_count` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Temporary view structure for view `all_nodes`
+-- Table structure for table `all_nodes`
 --
 
 DROP TABLE IF EXISTS `all_nodes`;
-/*!50001 DROP VIEW IF EXISTS `all_nodes`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `all_nodes` AS SELECT
- 1 AS `username`,
- 1 AS `display_name`*/;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `all_nodes` (
+  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `display_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `followers`
@@ -64,9 +64,9 @@ CREATE TABLE `followers` (
   `updated_at` datetime NOT NULL,
   `account_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_followers_accounts` (`account_id`),
+  KEY `fk_followers_accounts` (`account_id`) USING BTREE,
   CONSTRAINT `followers_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3648 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=780 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,9 +85,9 @@ CREATE TABLE `followings` (
   `updated_at` datetime NOT NULL,
   `account_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_followings_accounts` (`account_id`),
+  KEY `fk_followings_accounts` (`account_id`) USING BTREE,
   CONSTRAINT `followings_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3265 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2405 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,24 +102,6 @@ CREATE TABLE `schema_migrations` (
   UNIQUE KEY `unique_schema_migrations` (`version`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Final view structure for view `all_nodes`
---
-
-/*!50001 DROP VIEW IF EXISTS `all_nodes`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `all_nodes` AS select `accounts`.`username` AS `username`,`accounts`.`display_name` AS `display_name` from `accounts` union select `followers`.`username` AS `username`,`followers`.`display_name` AS `display_name` from `followers` union select `followings`.`username` AS `username`,`followings`.`display_name` AS `display_name` from `followings` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -130,9 +112,10 @@ CREATE TABLE `schema_migrations` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-06 17:25:49
+-- Dump completed on 2016-01-10 12:14:13
 INSERT INTO schema_migrations (version) VALUES ('20151226225811');
 
 INSERT INTO schema_migrations (version) VALUES ('20151226234715');
 
 INSERT INTO schema_migrations (version) VALUES ('20151226234757');
+
