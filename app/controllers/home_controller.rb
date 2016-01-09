@@ -169,16 +169,6 @@ class HomeController < ApplicationController
       baseurl = "https://api.twitter.com"
       path    = "/1.1/followers/list.json"
       # path    = "/1.1/followers/list.json"
-      query   = URI.encode_www_form(
-          "user_id" => twitter_id,
-          "count" => 200,
-      )
-      address = URI("#{baseurl}#{path}?#{query}")
-
-      # Set up HTTP.
-      http             = Net::HTTP.new address.host, address.port
-      http.use_ssl     = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
       # If you entered your credentials in the previous
       # exercise, no need to enter them again here. The
@@ -186,32 +176,53 @@ class HomeController < ApplicationController
       # they are not already set.
       consumer_key ||= OAuth::Consumer.new("81lKqVQwhRmmpRUk6FWvhFvF4", "cWQxoI1B9WFOPHTNTXc64zn0oOGvswpktbYeH1xqUIbjqr1EYc")
       access_token ||= OAuth::Token.new("33718717-CHcZAacLIT07lkrsb0uKxxbPFr3SFKXOqCavXKVz6", "rhHjSc3Rpk2Fl3DrgGOR5T7PfRExa9FaBs3hu0jAkLG7z")
+      
+      cursor = -1
+      
+      loop do
+      
+        query   = URI.encode_www_form(
+            "user_id" => twitter_id,
+            "count" => 200,
+        )
+        address = URI("#{baseurl}#{path}?#{query}")
 
-      # Issue the request.
-      request = Net::HTTP::Get.new address.request_uri
-      request.oauth! http, consumer_key, access_token
-      http.start
-      response = http.request(request)
+        # Set up HTTP.
+        http             = Net::HTTP.new address.host, address.port
+        http.use_ssl     = true
+        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
 
-      i = JSON.parse(response.body)
+        # Issue the request.
+        request = Net::HTTP::Get.new address.request_uri
+        request.oauth! http, consumer_key, access_token
+        http.start
+        response = http.request(request)
 
-      account_id = get_account_id twitter_id
+        i = JSON.parse(response.body)
 
-      i['users'].each do |user|
+        account_id = get_account_id twitter_id
 
-        @following = Follower.new
+        i['users'].each do |user|
 
-        @following.username = user['screen_name']
-        @following.display_name = user['name']
-        @following.twitter_id = user['id_str']
+            @following = Follower.new
 
-        @following.account_id = account_id
+            @following.username = user['screen_name']
+            @following.display_name = user['name']
+            @following.twitter_id = user['id_str']
 
-        @following.save
+            @following.account_id = account_id
 
+            @following.save
+
+        end
+        
+        cursor = i['next_cursor']
+
+        http.finish
+        
+        break if cursor == 0
+      
       end
-
-      http.finish
     end
 
     def add_following (twitter_id)
