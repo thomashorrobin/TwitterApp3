@@ -52,7 +52,7 @@ class HomeController < ApplicationController
   end
 
   def export_edges
-    @content = '"Follower","Following"' + "\n"
+    @content = ''
 
     Follower.all.each do |follower|
       @content << '"' + follower.username + '","' + follower.account.username + '"' + "\n"
