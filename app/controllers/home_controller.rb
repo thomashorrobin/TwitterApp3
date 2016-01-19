@@ -7,8 +7,8 @@ class HomeController < ApplicationController
 
     account_id = add_user_account params[:username]
 
-    add_following account_id
-    add_followers account_id
+    add_following params[:username]
+    add_followers params[:username]
 
     redirect_to "/home/index"
 
