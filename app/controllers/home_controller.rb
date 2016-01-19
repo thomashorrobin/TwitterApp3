@@ -289,7 +289,7 @@ class HomeController < ApplicationController
     end
 
     def get_account_id (twitter_id)
-      @account = Account.find_by twitter_id: twitter_id
+      @account = Account.find_by username: twitter_id
       return @account.id
     end
 
