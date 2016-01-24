@@ -18,6 +18,8 @@ gem 'oauth'
 
 gem 'json'
 
+gem 'puma'
+
 gem 'unicorn'
 
 # Use jquery as the JavaScript library
