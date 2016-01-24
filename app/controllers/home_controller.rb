@@ -1,19 +1,42 @@
 class HomeController < ApplicationController
+
+  @rate_limit_hit = false
+
   def index
     @accounts = Account.all
   end
 
   def addaccount
+  
+    account = Account.find_by username: params[:username]
+    
+    account_doesnt_exisits = account == nil
+    
+    # logger.log account_doesnt_exisits
+    
+    if account_doesnt_exisits
 
-    account_id = add_user_account params[:username]
+        account_id = add_user_account params[:username]
 
-    add_following params[:username]
-    add_followers params[:username]
-
-    redirect_to "/home/index"
+        add_following params[:username]
+        add_followers params[:username]
+        
+        if @rate_limit_hit
+            rate_limit_hit_return
+        else
+            redirect_to "/home/index"
+        end
+        
+    else
+    
+        respond_to do |format|
+            format.html { render :text => "account " + params[:username] + " already exisits" }
+        end
+    
+    end
 
     # respond_to do |format|
-    #   format.html { render :text => followers['users'].count }
+    #   format.html { render :text => account_id }
     # end
   end
 
@@ -182,11 +205,13 @@ class HomeController < ApplicationController
       loop do
       
         query   = URI.encode_www_form(
-            "user_id" => twitter_id,
+            "screen_name" => twitter_id,
             "count" => 200,
             "cursor" => cursor
         )
         address = URI("#{baseurl}#{path}?#{query}")
+        
+        logger.debug address
 
         # Set up HTTP.
         http             = Net::HTTP.new address.host, address.port
@@ -200,20 +225,25 @@ class HomeController < ApplicationController
         response = http.request(request)
 
         i = JSON.parse(response.body)
+        
+        if i['errors'] != nil
+            @rate_limit_hit = true
+            break
+        end
 
         account_id = get_account_id twitter_id
 
         i['users'].each do |user|
 
-            @following = Follower.new
+            @follower = Follower.new
 
-            @following.username = user['screen_name']
-            @following.display_name = user['name']
-            @following.twitter_id = user['id_str']
+            @follower.username = user['screen_name']
+            @follower.display_name = user['name']
+            @follower.twitter_id = user['id_str']
 
-            @following.account_id = account_id
+            @follower.account_id = account_id
 
-            @following.save
+            @follower.save
 
         end
         
@@ -246,7 +276,7 @@ class HomeController < ApplicationController
       loop do
       
         query   = URI.encode_www_form(
-            "user_id" => twitter_id,
+            "screen_name" => twitter_id,
             "count" => 200,
             "cursor" => cursor
         )
@@ -264,6 +294,11 @@ class HomeController < ApplicationController
         response = http.request(request)
 
         i = JSON.parse(response.body)
+        
+        if i['errors'] != nil
+            @rate_limit_hit = true
+            break
+        end
 
         account_id = get_account_id twitter_id
 
@@ -285,12 +320,20 @@ class HomeController < ApplicationController
         
         cursor = i['next_cursor']
         
+        break if cursor == 0
+        
       end
     end
 
     def get_account_id (twitter_id)
       @account = Account.find_by username: twitter_id
       return @account.id
+    end
+    
+    def rate_limit_hit_return
+        respond_to do |format|
+            format.html { render :text => "unfortunately you have hit the Twitter API rate limit" }
+        end
     end
 
 end
