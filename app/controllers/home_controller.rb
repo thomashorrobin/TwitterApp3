@@ -7,32 +7,32 @@ class HomeController < ApplicationController
   end
 
   def addaccount
-  
+
     account = Account.find_by username: params[:username]
-    
+
     account_doesnt_exisits = account == nil
-    
+
     # logger.log account_doesnt_exisits
-    
+
     if account_doesnt_exisits
 
         account_id = add_user_account params[:username]
 
         add_following params[:username]
         add_followers params[:username]
-        
+
         if @rate_limit_hit
             rate_limit_hit_return
         else
             redirect_to "/home/index"
         end
-        
+
     else
-    
+
         respond_to do |format|
             format.html { render :text => "account " + params[:username] + " already exisits" }
         end
-    
+
     end
 
     # respond_to do |format|
@@ -88,6 +88,10 @@ class HomeController < ApplicationController
     send_data @content,
       :type => 'text',
       :disposition => "attachment; filename=edges.csv"
+  end
+
+  def export_selected_edges
+    @accounts = Account.all
   end
 
   private
@@ -199,18 +203,18 @@ class HomeController < ApplicationController
       # they are not already set.
       consumer_key ||= OAuth::Consumer.new("81lKqVQwhRmmpRUk6FWvhFvF4", "cWQxoI1B9WFOPHTNTXc64zn0oOGvswpktbYeH1xqUIbjqr1EYc")
       access_token ||= OAuth::Token.new("33718717-CHcZAacLIT07lkrsb0uKxxbPFr3SFKXOqCavXKVz6", "rhHjSc3Rpk2Fl3DrgGOR5T7PfRExa9FaBs3hu0jAkLG7z")
-      
+
       cursor = -1
-      
+
       loop do
-      
+
         query   = URI.encode_www_form(
             "screen_name" => twitter_id,
             "count" => 200,
             "cursor" => cursor
         )
         address = URI("#{baseurl}#{path}?#{query}")
-        
+
         logger.debug address
 
         # Set up HTTP.
@@ -225,7 +229,7 @@ class HomeController < ApplicationController
         response = http.request(request)
 
         i = JSON.parse(response.body)
-        
+
         if i['errors'] != nil
             @rate_limit_hit = true
             break
@@ -246,13 +250,13 @@ class HomeController < ApplicationController
             @follower.save
 
         end
-        
+
         cursor = i['next_cursor']
 
         http.finish
-        
+
         break if cursor == 0
-      
+
       end
     end
 
@@ -270,11 +274,11 @@ class HomeController < ApplicationController
       baseurl = "https://api.twitter.com"
       path    = "/1.1/friends/list.json"
       # path    = "/1.1/followers/list.json"
-      
+
       cursor = -1
-      
+
       loop do
-      
+
         query   = URI.encode_www_form(
             "screen_name" => twitter_id,
             "count" => 200,
@@ -294,7 +298,7 @@ class HomeController < ApplicationController
         response = http.request(request)
 
         i = JSON.parse(response.body)
-        
+
         if i['errors'] != nil
             @rate_limit_hit = true
             break
@@ -317,11 +321,11 @@ class HomeController < ApplicationController
         end
 
         http.finish
-        
+
         cursor = i['next_cursor']
-        
+
         break if cursor == 0
-        
+
       end
     end
 
@@ -329,7 +333,7 @@ class HomeController < ApplicationController
       @account = Account.find_by username: twitter_id
       return @account.id
     end
-    
+
     def rate_limit_hit_return
         respond_to do |format|
             format.html { render :text => "unfortunately you have hit the Twitter API rate limit" }

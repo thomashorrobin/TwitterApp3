@@ -1,0 +1,29 @@
+<h1>Twitter for Gephi</h1>
+<hr>
+<h2>Select Accounts to Export</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Twitter</th>
+      <th>Display name</th>
+      <th>
+
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accounts.each do |account| %>
+      <tr>
+        <td><%= account.username %></td>
+        <td><%= account.twitter_id %></td>
+        <td><%= account.display_name %></td>
+        <td>
+          <input type="checkbox" name="name" value="">
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= button_to 'Export', '/home/export_selected_edges', method: :get %>
