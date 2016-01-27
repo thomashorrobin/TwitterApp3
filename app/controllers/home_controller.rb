@@ -74,7 +74,7 @@ class HomeController < ApplicationController
     redirect_to "/home/index"
   end
 
-  def export_edges
+  def export_all_edges
     @content = ''
 
     Follower.all.each do |follower|
