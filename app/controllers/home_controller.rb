@@ -94,6 +94,26 @@ class HomeController < ApplicationController
     @accounts = Account.all
   end
 
+  def export_selected_edges_file
+    @content = ''
+
+    Follower.where({ account_id: params[:accounts] }).each do |follower|
+      @content << '"' + follower.username + '","' + follower.account.username + '"' + "\n"
+    end
+
+    Following.where({ account_id: params[:accounts] }).each do |following|
+      @content << '"' + following.account.username + '","' + following.username + '"' + "\n"
+    end
+
+    send_data @content,
+      :type => 'text',
+      :disposition => "attachment; filename=edges.csv"
+
+    # respond_to do |format|
+    #   format.html { render :text => params[:accounts] }
+    # end
+  end
+
   private
 
     def add_user_account (username)

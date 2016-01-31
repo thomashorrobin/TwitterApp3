@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   post 'home/resetall'
 
   get 'home/export_selected_edges'
+
+  post 'home/export_selected_edges' => 'home#export_selected_edges_file'
+
   get 'home/export_all_edges'
 
   # The priority is based upon order of creation: first created -> highest priority.
