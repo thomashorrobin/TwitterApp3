@@ -1,0 +1,29 @@
+<%= form_for(@api_call_log) do |f| %>
+  <% if @api_call_log.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@api_call_log.errors.count, "error") %> prohibited this api_call_log from being saved:</h2>
+
+      <ul>
+      <% @api_call_log.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :calldescription %><br>
+    <%= f.text_field :calldescription %>
+  </div>
+  <div class="field">
+    <%= f.label :calldatetime %><br>
+    <%= f.datetime_select :calldatetime %>
+  </div>
+  <div class="field">
+    <%= f.label :successful %><br>
+    <%= f.check_box :successful %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

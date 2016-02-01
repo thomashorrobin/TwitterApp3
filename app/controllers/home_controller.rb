@@ -146,6 +146,8 @@ class HomeController < ApplicationController
       request.oauth! http, consumer_key, access_token
       http.start
       response = http.request(request)
+      
+      write_to_api_call_log("Called the users/show end point to retrive data on " + username, true)
 
       i = JSON.parse(response.body)
 
@@ -194,6 +196,8 @@ class HomeController < ApplicationController
       request.oauth! http, consumer_key, access_token
       http.start
       response = http.request(request)
+      
+      write_to_api_call_log("Called the users/show end point to refresh data on " + twitter_id, true)
 
       i = JSON.parse(response.body)
 
@@ -252,7 +256,10 @@ class HomeController < ApplicationController
 
         if i['errors'] != nil
             @rate_limit_hit = true
+            write_to_api_call_log("A rate limit was hit when processing for twitter id: " + twitter_id, false)
             break
+        else
+            write_to_api_call_log("Follower data was successfully retrived for twitter id: " + twitter_id, true)
         end
 
         account_id = get_account_id twitter_id
@@ -321,7 +328,10 @@ class HomeController < ApplicationController
 
         if i['errors'] != nil
             @rate_limit_hit = true
+            write_to_api_call_log("A rate limit was hit when processing for twitter id: " + twitter_id, false)
             break
+        else
+            write_to_api_call_log("Following data was successfully retrived for twitter id: " + twitter_id, true)
         end
 
         account_id = get_account_id twitter_id
@@ -358,6 +368,18 @@ class HomeController < ApplicationController
         respond_to do |format|
             format.html { render :text => "unfortunately you have hit the Twitter API rate limit" }
         end
+    end
+    
+    def write_to_api_call_log (message, successful)
+      
+      @api_call_log = ApiCallLog.new
+      
+      @api_call_log.calldatetime = Time.new
+      @api_call_log.calldescription = message
+      @api_call_log.successful = successful
+      
+      @api_call_log.save
+      
     end
 
 end

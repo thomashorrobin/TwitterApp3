@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Calldescription:</strong>
+  <%= @api_call_log.calldescription %>
+</p>
+
+<p>
+  <strong>Calldatetime:</strong>
+  <%= @api_call_log.calldatetime %>
+</p>
+
+<p>
+  <strong>Successful:</strong>
+  <%= @api_call_log.successful %>
+</p>
+
+<%= link_to 'Edit', edit_api_call_log_path(@api_call_log) %> |
+<%= link_to 'Back', api_call_logs_path %>

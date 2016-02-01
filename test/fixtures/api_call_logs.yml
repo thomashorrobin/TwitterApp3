@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  calldescription: MyString
+  calldatetime: 2016-02-01 22:29:01
+  successful: false
+
+two:
+  calldescription: MyString
+  calldatetime: 2016-02-01 22:29:01
+  successful: false

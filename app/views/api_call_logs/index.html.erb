@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Api Call Logs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Calldescription</th>
+      <th>Calldatetime</th>
+      <th>Successful</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @api_call_logs.each do |api_call_log| %>
+      <tr>
+        <td><%= api_call_log.calldescription %></td>
+        <td><%= api_call_log.calldatetime %></td>
+        <td><%= api_call_log.successful %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Api call log', new_api_call_log_path %>
