@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201092901) do
+ActiveRecord::Schema.define(version: 20160202233910) do
 
   create_table "accounts", force: :cascade do |t|
     t.string   "username",        limit: 255
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20160201092901) do
     t.boolean  "successful"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.string   "EndPointPath",    limit: 255
+    t.string   "TwitterHandle",   limit: 255
   end
 
   create_table "followers", force: :cascade do |t|
