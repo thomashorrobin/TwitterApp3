@@ -15,7 +15,7 @@
 
   <tbody>
     <% @api_call_logs.each do |api_call_log| %>
-      <tr>
+      <tr class="<%= api_call_log.successful ? 'success-log' : 'failed-log' %>">
         <td><%= api_call_log.calldescription %></td>
         <td><%= api_call_log.successful %></td>
         <td><%= api_call_log.EndPointPath %></td>
