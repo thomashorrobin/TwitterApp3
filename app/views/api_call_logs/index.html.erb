@@ -5,11 +5,11 @@
 <table>
   <thead>
     <tr>
-      <th>Calldescription</th>
-      <th>Calldatetime</th>
+      <th>Description</th>
       <th>Successful</th>
       <th>API Path</th>
       <th>Twitter Handle</th>
+      <th>Time of API call</th>
     </tr>
   </thead>
 
@@ -17,15 +17,11 @@
     <% @api_call_logs.each do |api_call_log| %>
       <tr>
         <td><%= api_call_log.calldescription %></td>
-        <td><%= api_call_log.calldatetime %></td>
         <td><%= api_call_log.successful %></td>
         <td><%= api_call_log.EndPointPath %></td>
         <td><%= api_call_log.TwitterHandle %></td>
+        <td><%= api_call_log.calldatetime %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Api call log', new_api_call_log_path %>
