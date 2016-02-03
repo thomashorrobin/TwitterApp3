@@ -4,7 +4,7 @@ class ApiCallLogsController < ApplicationController
   # GET /api_call_logs
   # GET /api_call_logs.json
   def index
-    @api_call_logs = ApiCallLog.all
+    @api_call_logs = ApiCallLog.all.order('calldatetime').reverse_order
   end
 
   # GET /api_call_logs/1
