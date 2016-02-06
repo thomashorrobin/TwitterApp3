@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: TwitterApp3_development
 -- ------------------------------------------------------
--- Server version	5.6.27
+-- Server version	5.7.10
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,7 +32,7 @@ CREATE TABLE `accounts` (
   `followers_count` int(11) NOT NULL,
   `following_count` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,6 +46,27 @@ CREATE TABLE `all_nodes` (
   `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `display_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `api_call_logs`
+--
+
+DROP TABLE IF EXISTS `api_call_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `api_call_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `calldescription` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `calldatetime` datetime DEFAULT NULL,
+  `successful` tinyint(1) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `EndPointPath` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TwitterHandle` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `RecordsInserted` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +87,7 @@ CREATE TABLE `followers` (
   PRIMARY KEY (`id`),
   KEY `fk_followers_accounts` (`account_id`) USING BTREE,
   CONSTRAINT `followers_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=780 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12569 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,7 +108,7 @@ CREATE TABLE `followings` (
   PRIMARY KEY (`id`),
   KEY `fk_followings_accounts` (`account_id`) USING BTREE,
   CONSTRAINT `followings_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2405 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16248 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,10 +133,16 @@ CREATE TABLE `schema_migrations` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-10 12:14:13
+-- Dump completed on 2016-02-07 11:05:14
 INSERT INTO schema_migrations (version) VALUES ('20151226225811');
 
 INSERT INTO schema_migrations (version) VALUES ('20151226234715');
 
 INSERT INTO schema_migrations (version) VALUES ('20151226234757');
+
+INSERT INTO schema_migrations (version) VALUES ('20160201092901');
+
+INSERT INTO schema_migrations (version) VALUES ('20160202233910');
+
+INSERT INTO schema_migrations (version) VALUES ('20160206220324');
 
