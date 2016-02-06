@@ -10,6 +10,7 @@
       <th>API Path</th>
       <th>Twitter Handle</th>
       <th>Time of API call</th>
+      <th>Records Added</th>
     </tr>
   </thead>
 
@@ -21,6 +22,7 @@
         <td><%= api_call_log.EndPointPath %></td>
         <td><%= api_call_log.TwitterHandle %></td>
         <td><%= api_call_log.calldatetime.in_time_zone("Auckland").strftime("%I:%M %p") %></td>
+        <td><%= api_call_log.RecordsInserted %></td>
       </tr>
     <% end %>
   </tbody>
