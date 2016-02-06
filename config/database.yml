@@ -14,7 +14,7 @@ default: &default
   encoding: utf8
   pool: 5
   username: root
-  password:
+  password: <%= ENV['TWITTERAPP3_DATABASE_PASSWORD'] %>
   host: localhost
 
 development:
