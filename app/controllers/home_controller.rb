@@ -94,6 +94,28 @@ class HomeController < ApplicationController
     @accounts = Account.all
   end
 
+  def export_party_edges_file
+    @content = ''
+    
+    @account_ids = Account.where({ party_affiliation_id: params[:party]['party_affiliation_id'] }).pluck(:id)
+
+    Follower.where({ account_id: @account_ids }).each do |follower|
+      @content << '"' + follower.username + '","' + follower.account.username + '"' + "\n"
+    end
+
+    Following.where({ account_id: @account_ids }).each do |following|
+      @content << '"' + following.account.username + '","' + following.username + '"' + "\n"
+    end
+
+    send_data @content,
+      :type => 'text',
+      :disposition => "attachment; filename=edges.csv"
+
+    # respond_to do |format|
+    #   format.html { render :text => params[:party]['party_affiliation_id'] }
+    # end
+  end
+
   def export_selected_edges_file
     @content = ''
 

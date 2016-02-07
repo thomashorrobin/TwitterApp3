@@ -18,6 +18,10 @@ Rails.application.routes.draw do
 
   get 'home/export_all_edges'
 
+  get 'home/export_party_edges'
+
+  post 'home/export_party_edges' => 'home#export_party_edges_file'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

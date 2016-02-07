@@ -1,0 +1,11 @@
+<h1>Export for Party</h1>
+<hr>
+<%= form_tag("/home/export_party_edges") do %>
+  <div class="field">
+    <%= label_tag "Select Party" %><br>
+    <%= collection_select("party", :party_affiliation_id, PartyAffiliation.all, :id, :partyAffiliation) %>
+  </div>
+  <div class="actions">
+    <%= submit_tag "Download" %>
+  </div>
+<% end %>
