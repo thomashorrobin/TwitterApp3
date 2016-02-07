@@ -18,6 +18,7 @@
       <th>Display name</th>
       <th>Followers</th>
       <th>Following</th>
+      <th>Party Affliation</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -30,7 +31,9 @@
         <td><%= account.display_name %></td>
         <td><%= account.followers_count %></td>
         <td><%= account.following_count %></td>
+        <td><span style="color:<%= account.party_affiliation.partyColour %>;"><%= fa_icon "square" %></span> <%= account.party_affiliation.partyAffiliation %></td>
         <td><%= link_to 'Show', account %></td>
+        <td><%= link_to 'Edit', edit_account_path(account) %></td>
         <td><%= button_to 'Destroy', account, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
