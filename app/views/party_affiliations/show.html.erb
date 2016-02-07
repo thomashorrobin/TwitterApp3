@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Party Name:</strong>
+  <%= @party_affiliation.partyAffiliation %>
+</p>
+
+<p>
+  <strong>Partycolour:</strong>
+  <%= @party_affiliation.partyColour %>
+</p>
+
+<%= link_to 'Edit', edit_party_affiliation_path(@party_affiliation) %> |
+<%= link_to 'Back', party_affiliations_path %>

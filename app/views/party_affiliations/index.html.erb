@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Party Affiliations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Party Name</th>
+      <th>Party Colour</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @party_affiliations.each do |party_affiliation| %>
+      <tr>
+        <td><%= party_affiliation.partyAffiliation %></td>
+        <td style="color: <%= party_affiliation.partyColour %>;"><%= fa_icon "square", text: party_affiliation.partyColour %></td>
+        <td><%= link_to 'Show', party_affiliation %></td>
+        <td><%= link_to 'Edit', edit_party_affiliation_path(party_affiliation) %></td>
+        <td><%= link_to 'Destroy', party_affiliation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Party affiliation', new_party_affiliation_path %>

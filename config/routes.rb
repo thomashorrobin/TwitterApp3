@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :party_affiliations
   resources :api_call_logs
   resources :followings
   resources :followers

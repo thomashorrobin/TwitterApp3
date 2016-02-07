@@ -1,0 +1,25 @@
+<%= form_for(@party_affiliation) do |f| %>
+  <% if @party_affiliation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@party_affiliation.errors.count, "error") %> prohibited this party_affiliation from being saved:</h2>
+
+      <ul>
+      <% @party_affiliation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Party Name" %><br>
+    <%= f.text_field :partyAffiliation %>
+  </div>
+  <div class="field">
+    <%= f.label :partyColour %><br>
+    <%= f.color_field :partyColour %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Create Party" %>
+  </div>
+<% end %>
